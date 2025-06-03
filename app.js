@@ -47,6 +47,10 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 app.engine('ejs',ejsMate);
 
+app.use((req, res, next) => {
+  res.locals.currentUser = req.session.user || null;
+  next();
+});
 
 const store = MongoStore.create({
     mongoUrl : dbURL,
